@@ -49,10 +49,11 @@ for i in range(0, page_num):
             datelist[date] = 1
 
 #sort the result by dictionary's key
-datelist_key = list(datelist.keys())
-datelist_key.reverse()
-datelist_value = list(datelist.values())
-datelist_value.reverse()
+datelist_key = []
+datelist_value = []
+for i in sorted(datelist):
+    datelist_key.append(i)
+    datelist_value.append(datelist[i])
 
 #construct the bar graph of datelist
 plt.bar(range(len(datelist)), datelist_value, align='center')
