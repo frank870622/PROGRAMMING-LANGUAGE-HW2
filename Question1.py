@@ -37,7 +37,20 @@ for i in range(0, page_num):
     #get string of announced date of each paper
     date = re.findall(date_pattern, page_html_str)
 
+    # a re pattern to get the author of each paper
+    author_line_pattern = 'Authors:</span>[\s\S]*?</p>'
+    # get string of co-author of each paper
+    co_author_line = re.findall(author_line_pattern, page_html_str)
+
+    author_line_num = 0
     for t in date:
+
+        # check if this paper is the author's, if not -> skip for next paper
+        author_line = co_author_line[author_line_num]
+        author_line_num = author_line_num + 1
+        if author_name not in author_line:
+            continue
+
         # cut the string of announced date(month & year)
         date = t.split('</span>')[1].split(".")[0].strip()
         #split date by ' ' to get the year of paper announced date
@@ -59,5 +72,11 @@ for i in sorted(datelist):
 plt.bar(range(len(datelist)), datelist_value, align='center')
 plt.xticks(range(len(datelist)), datelist_key)
 plt.yticks(range(max(datelist_value)+1))
+
+k = 0
+for i in datelist_value:
+    k += i
+print(k)
+
 #show the graph
 plt.show()

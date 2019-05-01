@@ -2,6 +2,7 @@ import urllib.request
 import re
 import math
 
+
 # a dictionary to save the number of the co-author appear in all papers
 co_author_list = {}
 # let user to input author name
@@ -34,11 +35,14 @@ for i in range(0, page_num):
     #a re pattern to get the co-author of each paper
     co_author_line_pattern = 'Authors:</span>[\s\S]*?</p>'
     #get string of co-author of each paper
-    co_author_line = re.findall(co_author_line_pattern, html_str)
+    co_author_line = re.findall(co_author_line_pattern, page_html_str)
 
     #a re pattern to get each co-author of a paper
     co_author_pattern = '\">[\s\S]*?</a>'
     for t in co_author_line:
+        if author_name not in t:
+            continue
+
         # get each co-author of a paper
         co_author = re.findall(co_author_pattern, t)
         for t in co_author:
